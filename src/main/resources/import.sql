@@ -1,0 +1,37 @@
+--
+-- JBoss, Home of Professional Open Source
+-- Copyright 2013, Red Hat, Inc. and/or its affiliates, and individual
+-- contributors by the @authors tag. See the copyright.txt in the
+-- distribution for a full listing of individual contributors.
+--
+-- Licensed under the Apache License, Version 2.0 (the "License");
+-- you may not use this file except in compliance with the License.
+-- You may obtain a copy of the License at
+-- http://www.apache.org/licenses/LICENSE-2.0
+-- Unless required by applicable law or agreed to in writing, software
+-- distributed under the License is distributed on an "AS IS" BASIS,
+-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-- See the License for the specific language governing permissions and
+-- limitations under the License.
+--
+
+-- You can use this file to load seed data into the database using SQL statements
+--insert into Usuario (id, nome, email, senha, companhia) values (999, 'William Hitoshi Tsunoda', 'william@email.com', '92a681afaa7323055d4640d380ef3a8c', 'UML'); 
+--insert into Usuario (id, nome, email, senha, companhia) values (1000, 'Meira', 'meira@email.com', '92a681afaa7323055d4640d380ef3a8c', 'Casas Bahia'); 
+--insert into Usuario (id, nome, email, senha, companhia) values (2000, 'Hitoshi', 'hitoshi@email.com', '92a681afaa7323055d4640d380ef3a8c', 'funtef'); 
+--insert into Projeto (id, descricao, nome, dono_id) values (1001, 'Projeto reqnrule', 'Reqnrule', '999');
+--insert into Membro (id, projeto_id, usuario_id, papel) values (1003, 1001, 999, 'GERENTE_DE_PROJETO');
+--insert into Membro (id, projeto_id, usuario_id, papel) values (1006, 1001, 1000, 'VERIFICADOR');
+--insert into Membro (id, projeto_id, usuario_id, papel) values (2001, 1001, 2000, 'EXCLUIDO');
+--insert into Projeto (id, descricao, nome, dono_id) values (1004, 'Projeto Eclipse', 'Eclipse', '1000');
+--insert into Membro (id, projeto_id, usuario_id, papel) values (1005, 1004, 999, 'GERENTE_DE_REQUISITOS');
+--insert into Membro (id, projeto_id, usuario_id, papel) values (1009, 1004, 1000,'GERENTE_DE_PROJETO');
+--insert into Membro (id, projeto_id, usuario_id, papel) values (2002, 1004, 2000,'VERIFICADOR');
+--insert into Requisito (id, estado, categoria, codigo, descricao, nome, prioridade, tipo, projeto_id) values (1007, 'ESPECIFICADO', 'USUARIO', 1, 'Usuario deve poder enviar emails', 'Adicionar usuario', 'ESSENCIAL', 'REQUISITO_FUNCIONAL', 1001);
+--insert into Requisito (id, estado, categoria, codigo, descricao, nome, prioridade, tipo, projeto_id) values (1008, 'ESPECIFICADO', 'ALIMENTO', 2, 'Alimento deve ser congelado apos usado.', 'Congelar alimento', 'DESEJADO', 'REQUISITO_NAO_FUNCIONAL', 1001);
+--insert into Requisito (id, estado, categoria, codigo, descricao, nome, prioridade, tipo, projeto_id) values (1010, 'ESPECIFICADO', 'USUARIO', 3, 'Usuario deve se cadastrar', 'Cadastrar usuario', 'ESSENCIAL', 'REQUISITO_FUNCIONAL', 1001);
+--insert into solicitacaomudanca (id, codigo, datasolicitacao, estado, solicitacao, autor_id, requisito_id) values (3000, 1, 'Thu, 01 Jan 1970 00:00:00', 'SOLICITADO', 'Alterar nome', 1003, 1007);
+--insert into mudanca (id, data, versao, autor_id, requisito_id) values (3001, 'Thu, 01 Jan 1970 00:00:00', 1, 1003, 1007);
+--insert into mudanca (id, data, versao, autor_id, requisito_id) values (3002, 'Thu, 01 Jan 1971 00:00:00', 2, 1003, 1007);
+--insert into solicitacaomudanca (id, codigo, datasolicitacao, estado, solicitacao, autor_id, requisito_id, mudanca_id, atendente_id, observacoes, dataatendimento) values (3002, 2, 'Thu, 01 Jan 1970 00:00:00', 'ATENDIDO', 'Alterar descricao', 1003, 1007, 3002, 1006, 'Atendido a correcao', 'Thu, 01 Jan 1971 00:00:00');
+--insert into solicitacaomudanca (id, codigo, datasolicitacao, estado, solicitacao, autor_id, requisito_id, mudanca_id, atendente_id, observacoes, dataatendimento) values (3003, 3, 'Thu, 01 Jan 1970 00:00:00', 'REJEITADO', 'Alterar tipo', 1003, 1007, 3002, 1006, 'Está correto', 'Thu, 01 Jan 1971 00:00:00');

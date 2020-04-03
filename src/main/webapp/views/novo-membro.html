@@ -1,0 +1,53 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="cancel()" aria-hidden="true">&times;</button>
+    <h3 class="modal-title">Novo Membro</h3>
+</div>
+<div class="modal-body">
+    <form role="form" name="searchForm">
+        <div class="form-group has-feedback" >
+            <label for="inputPesquisarUsuario">Procurar e-mail do novo usu&aacute;rio: </label>
+            <div class="input-group">
+                <input type="email" placeholder="Procurar" class="form-control validate" autofocus id="inputPesquisarUsuario" name="usearch" ng-model="novoMembroCtrl.searchEmail">
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="novoMembroCtrl.getUsuarioPorEmail()" ng-disabled="searchForm.usearch.$pristine || searchForm.usearch.$invalid">
+                    <span class="glyphicon glyphicon-search"></span>&nbsp;Procurar
+                </button>
+            </span>
+            </div>
+            <div ng-show="novoMembroCtrl.procurarMembroInvalido">
+                <div ng-repeat="erro in novoMembroCtrl.erro.procurarMembro">
+                    <h6 class="small text-danger"><span ng-bind="erro"></span></h6>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <span ng-show="novoMembroCtrl.novoUsuario">
+        <div class="panel panel-primary">
+            <div class="panel-heading"><strong>Informa&ccedil;&otilde;es do Novo Membro</strong></div>
+            <div class="panel-body">
+                <p><strong>Nome: </strong><span ng-bind="novoMembroCtrl.novoUsuario.nome"></span></p>
+                <p><strong>E-mail: </strong><span ng-bind="novoMembroCtrl.novoUsuario.email"></span></p>
+                <p><strong>Companhia: </strong><span ng-bind="novoMembroCtrl.novoUsuario.companhia"></span></p>
+                <div class="form-group form-inline">
+                    <label for="selectPapel">Papel: </label>
+                    <select class="form-control" id="selectPapel" ng-options="papel.valor as papel.nome for papel in novoMembroCtrl.papeis" ng-model="novoMembroCtrl.numeroPapel">
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <ul>
+            <li><strong>Observador</strong>: o observador pode apenas visualizar o projeto, os membros e os requisitos.</li>
+            <li><strong>Verificador</strong>: o verificador al&eacute;m de observar o projeto pode solicitar mudan&ccedil;as nos requisitos. </li>
+            <li><strong>Gerente de Requisitos</strong>: o gerente de requisitos al&eacute;m de observar e verificar o projeto pode atender as solicita&ccedil;&otilde;es e modificar os requisitos. </li>
+            <li><strong>Gerente de Projetos</strong>: o gerente de projeto al&eacute;m de observar, verificar e gerir os requisitos do projeto pode alterar as configura&ccedil;&otilde;es e gerenciar os membros do projeto.</li>
+        </ul>
+    </span>
+
+
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="novoMembroCtrl.adicionarMembro()" ng-disabled="!novoMembroCtrl.novoUsuario">Adicionar Membro</button>
+    <button class="btn btn-default" ng-click="cancel()">Cancelar</button>
+</div>

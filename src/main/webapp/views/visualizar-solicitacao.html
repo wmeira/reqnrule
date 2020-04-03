@@ -1,0 +1,31 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="cancel()" aria-hidden="true">&times;</button>
+    <h3 class="modal-title">Solicita&ccedil;&atilde;o</h3>
+    <small>C&oacute;digo <span ng-bind="visualizarSolicitacaoCtrl.solicitacao.codigo"></span></small>
+</div>
+<div class="modal-body">
+
+    <span ng-show="visualizarSolicitacaoCtrl.solicitacao.estado == 'ATENDIDO'">
+        <p><strong>Estado: </strong> <span ng-bind="visualizarSolicitacaoCtrl.solicitacao.estado" class="btn-sm btn-success"></span></p>
+    </span>
+    <span ng-show="visualizarSolicitacaoCtrl.solicitacao.estado == 'REJEITADO'">
+        <p><strong>Estado: </strong> <span ng-bind="visualizarSolicitacaoCtrl.solicitacao.estado" class="btn-sm btn-danger"></span></p>
+    </span>
+
+
+    <p><strong>Data da Solicita&ccedil;&atilde;o: </strong> <span ng-bind="visualizarSolicitacaoCtrl.getDataFormatada(visualizarSolicitacaoCtrl.solicitacao.dataSolicitacao)"></span></p>
+    <p><strong>Solicitante: </strong> <span ng-bind="visualizarSolicitacaoCtrl.solicitacao.autor.usuario.nome"></span></p>
+    <p><strong>Solicita&ccedil;&atilde;o</strong></p>
+    <textarea rows="5" type="text" id="inputSolicitacao" disabled required name="usolicitacao" class="form-control validate"  maxlength="2046" ng-model="visualizarSolicitacaoCtrl.solicitacao.solicitacao">
+    </textarea>
+    <hr>
+    <p><strong>Data do Atendimento: </strong> <span ng-bind="visualizarSolicitacaoCtrl.getDataFormatada(visualizarSolicitacaoCtrl.solicitacao.dataAtendimento)"></span></p>
+    <p><strong>Atendente: </strong> <span ng-bind="visualizarSolicitacaoCtrl.solicitacao.atendente.usuario.nome"></span></p>
+    <p><strong>Observa&ccedil;&otilde;es</strong></p>
+    <textarea rows="5" type="text" id="inputObservacoes" disabled required name="uobservacoes" class="form-control validate"  maxlength="2046" ng-model="visualizarSolicitacaoCtrl.solicitacao.observacoes">
+    </textarea>
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-default" ng-click="cancel()">Fechar</button>
+</div>

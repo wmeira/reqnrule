@@ -1,0 +1,28 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="cancel()" aria-hidden="true">&times;</button>
+    <h3 class="modal-title">Atender Solicita&ccedil;&atilde;o</h3>
+    <small>C&oacute;digo <span ng-bind="atenderSolicitacaoCtrl.solicitacao.codigo"></span></small>
+</div>
+<div class="modal-body">
+
+    <p><strong>Data da Solicita&ccedil;&atilde;o: </strong> <span ng-bind="atenderSolicitacaoCtrl.getDataFormatada(atenderSolicitacaoCtrl.solicitacao.dataSolicitacao)"></span></p>
+    <p><strong>Solicitante: </strong> <span ng-bind="atenderSolicitacaoCtrl.solicitacao.autor.usuario.nome"></span></p>
+    <p><strong>Solicita&ccedil;&atilde;o</strong></p>
+    <textarea rows="5" type="text" id="inputSolicitacao" disabled required name="usolicitacao" class="form-control validate"  maxlength="2046" ng-model="atenderSolicitacaoCtrl.solicitacao.solicitacao">
+    </textarea>
+
+    <form name="atenderSolicitacaoForm" role="form" ng-show="atenderSolicitacaoCtrl.podeAtender()">
+        <hr>
+        <div class="form-group">
+            <label for="inputObservacoes">Observa&ccedil;&otilde;es</label>
+            <textarea rows="5" type="text" id="inputObservacoes" autofocus name="uobservacoes" class="form-control validate"
+                      maxlength="2046" ng-model="atenderSolicitacaoCtrl.solicitacao.observacoes">
+            </textarea>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button ng-show="atenderSolicitacaoCtrl.podeAtender()" class="btn btn-danger" ng-click="atenderSolicitacaoCtrl.rejeitarSolicitacao()">Rejeitar</button>
+    <button ng-show="atenderSolicitacaoCtrl.podeAtender()" class="btn btn-primary" ng-click="atenderSolicitacaoCtrl.atenderSolicitacao()">Atender</button>
+    <button class="btn btn-default" ng-click="cancel()">Cancelar</button>
+</div>

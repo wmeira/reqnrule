@@ -1,0 +1,195 @@
+<div class="container">
+    <div class="row vcenter">
+        <div class="col-sm-6"><h1>Projeto <strong>"<span ng-bind="projetoCtrl.nomeAtual"></span>"</strong></h1></div>
+        <div class="col-sm-6">
+            <button ng-show="projetoCtrl.isDono()" class="btn btn-danger pull-right btnmargin-left"
+                    data-toggle="tooltip" data-placement="bottom"
+                    title="A opera&ccedil;&atilde;o deletar projeto n&atilde;o pode ser desfeita. Ser&atilde;o exclu&iacute;dos todos os requisitos e membros do projeto"
+                    ng-click="open('deletar-projeto', projetoCtrl.projeto)">
+                <span class="glyphicon glyphicon-eye-close"></span> Deletar Projeto
+            </button>
+            <button ng-disabled="projetoCtrl.isDono()" class="btn btn-danger pull-right btnmargin-left" ng-click="open('sair-projeto', projetoCtrl.projeto, projetoCtrl.getMembro())"
+                    data-toggle="tooltip" data-placement="bottom"
+                    title={{projetoCtrl.tooltipSairProjeto()}}>
+                <span class="glyphicon glyphicon-remove"></span> Sair do Projeto
+            </button>
+        </div>
+    </div>
+
+    <div class="row">
+        <hr>
+        <div ng-show="projetoCtrl.mensagemErro" class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" ng-click="projetoCtrl.mensagemErro = null">&times;</button>
+            <strong><span class="glyphicon glyphicon-remove-sign"></span>&nbsp;<span ng-bind="projetoCtrl.mensagemErro"></span></strong>
+        </div>
+        <div ng-show="projetoCtrl.mensagemSucesso" class="alert alert-success alert-dismissable">
+            <button type="button" class="close" ng-click="projetoCtrl.mensagemSucesso = null">&times;</button>
+            <strong><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;<span  ng-bind="projetoCtrl.mensagemSucesso"></span></strong>
+        </div>
+
+        <ul class="nav nav-tabs">
+            <li ng-class="{'active': projetoCtrl.tab == 1}"><a class="btn" ng-click="projetoCtrl.changeTab(1)">Descri&ccedil;&atilde;o</a></li>
+            <li ng-class="{'active': projetoCtrl.tab == 2}"><a  class="btn" ng-click="projetoCtrl.changeTab(2)">Membros</a></li>
+            <li ng-class="{'active': projetoCtrl.tab == 3}"><a class="btn" ng-click="projetoCtrl.changeTab(3)">Requisitos</a></li>
+        </ul>
+        <hr>
+
+        <div ng-show="projetoCtrl.tab == 1">
+            <!--<h3>Descri&ccedil;&atilde;o</h3>-->
+
+            <form role="form" name="projetoForm" ng-submit="projetoCtrl.alterarProjeto()">
+                <div ng-show="projetoCtrl.alterarProjetoInvalido" class="alert alert-danger alert-dismissable">
+                    <button type="button" class="close" ng-click="projetoCtrl.alterarProjetoInvalido = false">&times;</button>
+                    <strong><span class="glyphicon glyphicon-remove-sign"></span>&nbsp;Erro ao alterar as configura&ccedil;&otilde;es do projeto.</strong>
+                </div>
+                <div ng-show="projetoCtrl.alterarProjetoValido" class="alert alert-success alert-dismissable">
+                    <button type="button" class="close" ng-click="projetoCtrl.alterarProjetoValido = false">&times;</button>
+                    <strong><span class="glyphicon glyphicon-ok-sign"></span> Perfil alterado com sucesso.</strong>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputNome" class="control-label">Nome do Projeto<span class="text-danger">*</span></label>
+                    <input type="text" id="inputNome" name="unome" class="form-control validate" placeholder="Nome do Projeto"
+                           maxlength="128" required ng-model="projetoCtrl.projeto.nome" ng-disabled="!projetoCtrl.podeAlterarProjeto()">
+                    <div ng-show="projetoCtrl.alterarProjetoInvalido">
+                        <div ng-repeat="erro in projetoCtrl.erro.nome">
+                            <p class="small text-danger"><span ng-bind="erro"></span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputDescricao">Descri&ccedil;&atilde;o</label>
+                    <textarea rows="15" type="text" id="inputDescricao" name="udescricao" class="form-control validate"
+                              maxlength="2046" ng-model="projetoCtrl.projeto.descricao" ng-disabled="!projetoCtrl.podeAlterarProjeto()">
+                    </textarea>
+                    <div ng-show="projetoCtrl.alterarProjetoInvalido">
+                        <div ng-repeat="erro in projetoCtrl.erro.descricao">
+                            <p class="small text-danger"><span ng-bind="erro"></span></p>
+                        </div>
+                    </div>
+                </div>
+
+            <span ng-show="projetoCtrl.podeAlterarProjeto()">
+                <input class="btn btn-lg btn-primary btn-block" type="submit" ng-disabled="projetoForm.$pristine || projetoForm.$invalid" value="Alterar Projeto"/>
+                <span ng-show="projetoForm.unome.$error.required" >
+                    <p class="small"><span class="small text-danger">*</span> obrigat&oacute;rios</p>
+                </span>
+            </span>
+            </form>
+        </div>
+
+        <div ng-show="projetoCtrl.tab == 2" ng-controller="MembroController as membroCtrl">
+            <!--<h3>Membros</h3>-->
+            <div ng-show="projetoCtrl.podeAlterarProjeto()">
+                <div class="form-group">
+                    <a class="btn btn-primary" ng-click="open('novo-membro', projetoCtrl.projeto)"><span class="glyphicon glyphicon-plus"></span>&nbsp;Novo Membro</a>
+                    <a ng-show="projetoCtrl.isDono()" class="btn btn-danger" ng-click="open('alterar-dono', projetoCtrl.projeto)"><span class="glyphicon glyphicon-transfer"></span>&nbsp;Alterar Dono</a>
+                </div>
+            </div>
+
+            <div class="form-group has-feedback">
+                <input type="text" placeholder="Filtrar membros" class="form-control" id="inputSearchMembro" ng-model="membroCtrl.searchMembros">
+                <span class="glyphicon glyphicon-search form-control-feedback"></span>
+            </div>
+
+            <table class="table table-hover table-striped">
+                <thead>
+                <th class="col-sm-3">Nome</th>
+                <th class="col-sm-3">Email</th>
+                <th class="col-sm-2">Companhia</th>
+                <th class="col-sm-2">Papel</th>
+                <th class="col-sm-1"></th>
+                </thead>
+                <tbody>
+                <tr ng-repeat="m in projetoCtrl.projeto.membros | orderBy:'+usuario.nome' | filter:membroCtrl.searchMembros">
+                    <td class="vert-align"><span ng-bind="m.usuario.nome"></span></td>
+                    <td class="vert-align"><span ng-bind="m.usuario.email"></span></td>
+                    <td class="vert-align"><span ng-bind="m.usuario.companhia"></span></td>
+                    <td class="vert-align"><span ng-bind="membroCtrl.getPapel(m)"></span><span ng-show="projetoCtrl.projeto.dono.id == m.usuario.id">&nbsp;<strong>(dono)</strong></span></td>
+                    <td>
+                        <button ng-show="projetoCtrl.podeAlterarProjeto()" type="button" class="btn btn-link " ng-click="open('editar-membro', projetoCtrl.projeto, m)" ng-disabled="projetoCtrl.projeto.dono.id == m.usuario.id">
+                            <span class="glyphicon glyphicon-edit"></span> Editar
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div ng-show="projetoCtrl.tab == 3" ng-init="projetoCtrl.getRequisitosOrganizados()">
+            <!--<h3>Requisitos</h3>-->
+            <div ng-show="projetoCtrl.podeAlterarRequisito()">
+                <div class="form-group">
+                    <a class="btn btn-primary" ng-click="open('adicionar-requisito', projetoCtrl.projeto)"><span class="glyphicon glyphicon-plus"></span>&nbsp;Adicionar Requisito</a>
+                </div>
+            </div>
+
+            <div class="form-group has-feedback">
+                <input type="text" placeholder="Filtrar requisitos" class="form-control" id="inputSearchRequisito" ng-model="projetoCtrl.searchRequisitos">
+                <span class="glyphicon glyphicon-search form-control-feedback"></span>
+            </div>
+
+            <div class="checkbox checkbox-inline pull-right vcenter">
+                <label class="btnmargin-left">
+                    <input type="checkbox" ng-model="projetoCtrl.mostrarCancelados"> Mostrar requisitos cancelados
+                </label>
+                <label class="btnmargin-left">
+                    <input type="checkbox" ng-model="projetoCtrl.closeOthers" ng-click="expandirColapsarGrupos(false)"> Visualizar apenas um painel por vez
+                </label>
+            </div>
+
+            <div class="form-group form-inline">
+                <label for="organizarRequisitos">Organizar requisitos por: </label>
+                <select class="form-control" id="organizarRequisitos" ng-options="org for org in projetoCtrl.organizacao" ng-model="projetoCtrl.orgSelecionada" ng-change="projetoCtrl.getRequisitosOrganizados()">
+                </select>
+                <a class="btn btn-info" ng-click="expandirColapsarGrupos(true)" ng-disabled="projetoCtrl.closeOthers">Expandir Tudo</a>
+                <a class="btn btn-info" ng-click="expandirColapsarGrupos(false)" ng-disabled="projetoCtrl.closeOthers">Colapsar Tudo</a>
+            </div>
+
+            <div>
+                <accordion class="accordion" close-others="projetoCtrl.closeOthers">
+                    <accordion-group is-open="status.open" panel-class="panel-default" ng-repeat="requisitos in projetoCtrl.requisitosOrganizados | orderBy: projetoCtrl.orgSelecionada == 'CATEGORIA' ? '+titulo' : ''">
+                        <accordion-heading ">
+                            <strong><span ng-bind="requisitos.titulo"></span></strong> <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i><span class="pull-right badge vcenter" ng-bind="requisitos.req.length">&nbsp;</span>
+                        </accordion-heading>
+                        <table  class="table table-hover table-striped">
+                            <thead>
+                            <th class="col-sm-1">C&oacute;digo</th>
+                            <th class="col-sm-2">Tipo</th>
+                            <th class="col-sm-3">Nome</th>
+                            <th class="col-sm-1">Estado</th>
+                            <th class="col-sm-1">Prioridade</th>
+                            <th class="col-sm-2">Categoria</th>
+                            <th class="col-sm-1"></th>
+                            <th ng-show="projetoCtrl.podeAlterarRequisito()" class="col-sm-1"></th>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="r in requisitos.req | orderBy:'+codigo' | filter:{nome:projetoCtrl.searchRequisitos} | filter:{estado: projetoCtrl.mostrarCancelados ? '' : '!CANCELADO'}">
+                                <td class="vert-align"><span ng-bind="r.codigo"></span></td>
+                                <td class="vert-align"><span ng-bind="projetoCtrl.getTipoRequisito(r)"></span></td>
+                                <td class="vert-align"><span ng-bind="r.nome"></span></td>
+                                <td class="vert-align"><span ng-bind="projetoCtrl.getEstadoRequisito(r)"></span></td>
+                                <td class="vert-align"><span ng-bind="projetoCtrl.getPrioridade(r)"></span></td>
+                                <td class="vert-align"><span ng-bind="r.categoria"></span></td>
+                                <td>
+                                    <button type="button" class="btn btn-link" ng-click="open('requisito', projetoCtrl.projeto, null, r)">
+                                        <span class="glyphicon glyphicon-eye-open"></span>&nbsp;Visualizar
+                                    </button>
+                                </td>
+                                <td ng-show="projetoCtrl.podeAlterarRequisito()">
+                                    <button type="button" class="btn btn-link" ng-click="open('deletar-requisito', projetoCtrl.projeto, null, r)">
+                                        <span class="glyphicon glyphicon-remove-sign"></span>&nbsp;Deletar
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </accordion-group>
+                </accordion>
+            </div>
+
+
+        </div>
+    </div>
+</div>

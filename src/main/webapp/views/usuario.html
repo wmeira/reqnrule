@@ -1,0 +1,88 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-offset-3 col-sm-6 col-sm-offset-3">
+            <form role="form" name="usuarioForm" ng-submit="usuarioCtrl.alterar()">
+                <h1 class="form-signin-heading">Perfil</h1> <hr>
+
+                <div ng-show="usuarioCtrl.alteracaoInvalida" class="alert alert-danger alert-dismissable">
+                    <button type="button" class="close" ng-click="usuarioCtrl.alteracaoInvalida = null">&times;</button>
+                    <strong><span class="glyphicon glyphicon-remove-sign"></span>&nbsp;Erro ao alterar conta do usu&aacute;rio.</strong>
+                </div>
+                <div ng-show="usuarioCtrl.alteracaoValida" class="alert alert-success alert-dismissable">
+                    <button type="button" class="close" ng-click="usuarioCtrl.alteracaoValida = null">&times;</button>
+                    <strong><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;Perfil alterado com sucesso.</strong>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputEmail" class="control-label">E-mail</label>
+                    <input type="text" id="inputEmail" name="uemail" class="form-control disabled" ng-model="usuarioCtrl.usuario.email" disabled>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputNome">Nome<span class="text-danger">*</span></label>
+                    <input type="text" id="inputNome" name="unome" class="form-control validate" placeholder="Nome completo" maxlength="128" autofocus required ng-model="usuarioCtrl.usuario.nome">
+                    <div ng-show="usuarioCtrl.alteracaoInvalida">
+                        <div ng-repeat="erro in usuarioCtrl.erro.nome">
+                            <p class="small text-danger" ><span ng-bind="erro"></span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputCompanhia">Companhia</label>
+                    <input type="text" id="inputCompanhia" name="ucompanhia" class="form-control validate" placeholder="Companhia" maxlength="128" ng-model="usuarioCtrl.usuario.companhia"/>
+                    <div ng-show="usuarioCtrl.alteracaoInvalida">
+                        <div ng-repeat="erro in usuarioCtrl.erro.companhia">
+                            <p class="small text-danger" ><span ng-bind="erro"></span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <input class="btn btn-lg btn-primary btn-block" type="submit" ng-disabled="usuarioForm.$pristine || usuarioForm.unome.$error.required" value="Alterar Perfil"/>
+                <span ng-show="usuarioForm.unome.$error.required">
+                    <p class="small"><span class="small text-danger">*</span> obrigat&oacute;rios</p>
+                </span>
+            </form>
+
+            <form role="form" name="senhaForm" ng-submit="usuarioCtrl.alterarSenha()">
+                <hr>
+                <div ng-show="usuarioCtrl.senhaInvalida" class="alert alert-danger alert-dismissable">
+                    <button type="button" class="close" ng-click="usuarioCtrl.senhaInvalida = null">&times;</button>
+                    <strong>Erro ao alterar senha do usu&aacute;rio.</strong>
+                </div>
+                <div ng-show="usuarioCtrl.senhaValida" class="alert alert-success alert-dismissable">
+                    <button type="button" class="close" ng-click="usuarioCtrl.senhaValida = null">&times;</button>
+                    <strong>Senha alterada com sucesso.</strong>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputSenhaAntiga">Senha Atual<span class="text-danger">*</span></label>
+                    <input type="password" id="inputSenhaAntiga" name="usenhaantiga" class="form-control validate" placeholder="Senha Atual" maxlength="128" required ng-model="usuarioCtrl.senhaAntiga">
+                    <div ng-show="usuarioCtrl.senhaInvalida">
+                        <div ng-repeat="erro in usuarioCtrl.erro.senhaAntiga">
+                            <p class="small text-danger" ><span ng-bind="erro"></span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputSenhaNova">Nova Senha<span class="text-danger">*</span></label>
+                    <input type="password" id="inputSenhaNova" name="usenhanova" class="form-control validate" placeholder="Nova Senha" ng-minlength="8" maxlength="128" required ng-model="usuarioCtrl.senhaNova">
+                    <div ng-show="senhaForm.usenhanova.$error.minlength">
+                        <span class="small text-danger">A nova senha deve ter no m&iacute;nimo 8 caracteres.</span>
+                    </div>
+                    <div ng-show="usuarioCtrl.senhaInvalida">
+                        <div ng-repeat="erro in usuarioCtrl.erro.senhaNova">
+                            <p class="small text-danger" ><span ng-bind="erro"></span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <input class="btn btn-lg btn-primary btn-block" type="submit" ng-disabled="senhaForm.$invalid" value="Alterar Senha"/>
+                <span ng-show="!senhaForm.$pristine && (senhaForm.usenhaantiga.$error.required || senhaForm.usenhanova.$error.required)" >
+                    <p class="small"><span class="small text-danger">*</span> obrigat&oacute;rios</p>
+                </span>
+            </form>
+        </div>
+    </div>
+</div>

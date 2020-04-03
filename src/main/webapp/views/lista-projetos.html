@@ -1,0 +1,34 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-offset-2 col-sm-8 col-sm-offset-2">
+            <div ng-show="listaProjetoCtrl.sucesso" class="alert alert-success alert-dismissable">
+                <button type="button" class="close" ng-click="listaProjetoCtrl.sucesso = null">&times;</button>
+                <strong><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;<span ng-bind="listaProjetoCtrl.sucesso"></span></strong>
+            </div>
+
+            <h1>Meus Projetos</h1><hr>
+            <div class="form-group">
+                <a class="btn btn-primary btn-block" href="#/novo-projeto"><span class="glyphicon glyphicon-plus"></span> Novo Projeto</a>
+            </div>
+            <div class="form-group has-feedback">
+                <input type="text" placeholder="Filtrar projetos" class="form-control" id="inputSearch" ng-model="listaProjetoCtrl.search">
+                <span class="glyphicon glyphicon-search form-control-feedback"></span>
+            </div>
+            <table class="table table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th class="col-sm-7">Projeto</th>
+                        <th class="col-sm-5">Papel</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="p in listaProjetoCtrl.listaProjetos() | filter:{nome:listaProjetoCtrl.search} | orderBy:'+nome'">
+                        <td><a ng-href="#/projeto/{{p.id}}" ng-bind="p.nome"></a></td>
+                        <td><span ng-bind="listaProjetoCtrl.getPapel(p)"></span>&nbsp;&nbsp;<span ng-show="listaProjetoCtrl.isDono(p)"><strong>(dono)</strong></span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>

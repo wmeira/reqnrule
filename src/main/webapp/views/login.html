@@ -1,0 +1,27 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-offset-3 col-sm-6 col-sm-offset-3">
+            <form role="form" class="form-signin" name="loginForm" ng-submit="loginCtrl.login()">
+                <h1 class="form-signin-heading">Login</h1><hr>
+                <div class="form-group">
+                    <label for="inputEmail" class="">E-mail</label>
+                    <input type="email" required id="inputEmail" class="form-control" ng-maxlength="128" maxlength="128" placeholder="usuario@email.com" autofocus ng-model="loginCtrl.email">
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword" class="">Senha</label>
+                    <input type="password" id="inputPassword" class="form-control" placeholder="********" ng-maxlength="128" maxlength="128" required ng-model="loginCtrl.senha">
+                </div>
+            <span ng-show="loginCtrl.loginInvalido">
+                <p class="text-danger" ng-bind="loginCtrl.loginInvalido"></p>
+            </span>
+                <input class="btn btn-lg btn-primary btn-block" type="submit" ng-disabled="loginForm.$invalid" value="Login">
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+

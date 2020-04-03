@@ -1,0 +1,29 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="cancel()" aria-hidden="true">&times;</button>
+    <h3 class="modal-title">Membro: <strong><span ng-bind="updateMembroCtrl.membro.usuario.nome"></span></strong></h3>
+</div>
+<div class="modal-body">
+    <p><strong>Papel Atual:</strong> <span ng-bind="updateMembroCtrl.getPapel()"></span></p>
+    <div class="form-group">
+        <label for="selectNovoPapel">Novo Papel: </label>
+        <select class="form-control" id="selectNovoPapel" ng-options="papel.valor as papel.nome for papel in updateMembroCtrl.papeis" ng-model="updateMembroCtrl.novoPapel">
+        </select>
+    </div>
+    <ul>
+        <li><strong>Observador</strong>: o observador pode apenas visualizar o projeto, os membros e os requisitos.</li>
+        <li><strong>Verificador</strong>: o verificador al&eacute;m de observar o projeto pode solicitar mudan&ccedil;as nos requisitos. </li>
+        <li><strong>Gerente de Requisitos</strong>: o gerente de requisitos al&eacute;m de observar e verificar o projeto pode atender as solicita&ccedil;&otilde;es e modificar os requisitos. </li>
+        <li><strong>Gerente de Projetos</strong>: o gerente de projeto al&eacute;m de observar, verificar e gerir os requisitos do projeto pode alterar as configura&ccedil;&otilde;es e gerenciar os membros do projeto.</li>
+    </ul>
+
+    <button class="btn btn-primary btn-block" ng-click="updateMembroCtrl.alterarMembro()">Alterar Papel</button>
+
+    <hr>
+
+    <p class="text-danger"><strong>Aten&ccedil;&atilde;o!</strong> A opera&ccedil;&atilde;o excluir membro n&atilde;o pode ser desfeita. Caso desejado, o usu&aacute;rio
+        poder&aacute; ser adicionado ao projeto novamente.</p>
+    <button class="btn btn-danger btn-block" ng-click="updateMembroCtrl.excluirMembro()">Excluir Membro</button>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default" ng-click="cancel()">Cancelar</button>
+</div>

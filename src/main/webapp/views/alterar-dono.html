@@ -1,0 +1,29 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="cancel()" aria-hidden="true">&times;</button>
+    <h3 class="modal-title">Projeto: <strong><span ng-bind="alterarDonoCtrl.projeto.nome"></span></strong></h3>
+</div>
+<div class="modal-body">
+    <div class="form-group" ng-init="alterarDonoCtrl.initGerentesDeProjeto()">
+
+        <label for="selectNovoDono"><p class="text-danger">Selecione abaixo o novo dono do projeto entre os Gerentes dispon&iacute;veis</p></label>
+        <span ng-show="alterarDonoCtrl.gerentesDeProjeto.length == 0">
+            <p>N&atilde;o existe outro Gerente de Projeto cadastrado.</p>
+        </span>
+        <span ng-show="alterarDonoCtrl.gerentesDeProjeto.length > 0">
+            <select class="form-control" id="selectNovoDono" ng-options="membro as membro.usuario.nome for membro in alterarDonoCtrl.getGerentesDeProjeto()" ng-model="alterarDonoCtrl.novoDono">
+            </select>
+        </span>
+
+    </div>
+    <div ng-show="alterarDonoCtrl.novoDono">
+        <p><strong>Nome: </strong><span ng-bind="alterarDonoCtrl.novoDono.usuario.nome"></span></p>
+        <p><strong>E-mail: </strong><span ng-bind="alterarDonoCtrl.novoDono.usuario.email"></span></p>
+        <p><strong>Companhia: </strong><span ng-bind="alterarDonoCtrl.novoDono.usuario.companhia"></span></p>
+    </div>
+
+
+</div>
+<div class="modal-footer">
+    <button class="btn btn-danger" ng-click="alterarDonoCtrl.alterarDono()" ng-disabled="!alterarDonoCtrl.novoDono">Alterar Dono</button>
+    <button class="btn btn-default" ng-click="cancel()">Cancelar</button>
+</div>

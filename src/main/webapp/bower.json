@@ -1,0 +1,28 @@
+{
+  "name": "reqnrule",
+  "version": "1.0.0",
+  "authors": [
+    "wmeira <williammeira@gmail.com>"
+  ],
+  "description": "Trabalho de conclusão de curso - Especialização em Engenharia de Software",
+  "main": "/app/js/app.js",
+  "keywords": [
+    "angularjs"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.5",
+    "angular-bootstrap": "~0.13.4",
+    "angular-cookies": "~1.4.5",
+    "angular-route": "~1.4.5",
+	'angular-animate": "~1.4.7",
+    "bootstrap": "~3.3.5"
+  }
+}

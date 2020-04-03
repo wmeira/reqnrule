@@ -1,0 +1,61 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-offset-3 col-sm-6 col-sm-offset-3">
+            <form role="form" name="signupForm" ng-submit="signupCtrl.signup()">
+                <h1 class="form-signin-heading">Criar Conta</h1> <hr>
+                <div ng-show="signupCtrl.signupInvalido" class="alert alert-danger alert-dismissable">
+                    <button type="button" class="close" ng-click="signupCtrl.signupInvalido = null">&times;</button>
+                    <strong><span class="glyphicon glyphicon-remove-sign"></span>&nbsp;Erro ao criar conta do usu&aacute;rio.</strong>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputNome">Nome<span class="text-danger">*</span></label>
+                    <input type="text" id="inputNome" name="unome" class="form-control validate" placeholder="Nome completo" ng-maxlength="128" autofocus required ng-model="signupCtrl.usuario.nome">
+                    <div ng-show="signupCtrl.signupInvalido">
+                        <div ng-repeat="erro in signupCtrl.erro.nome">
+                            <p class="small text-danger" ><span ng-bind="erro"></span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputCompanhia">Companhia</label>
+                    <input type="text" id="inputCompanhia" class="form-control validate" placeholder="Companhia" ng-maxlength="128" ng-model="signupCtrl.usuario.companhia">
+                    <div ng-show="signupCtrl.signupInvalido">
+                        <div ng-repeat="erro in signupCtrl.erro.companhia">
+                            <p class="small text-danger" ><span ng-bind="erro"></span></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail">E-mail<span class="text-danger">*</span></label>
+                    <input type="email" required id="inputEmail" name="uemail" class="form-control validate" placeholder="usuario@email.com" maxlength="128" ng-model="signupCtrl.usuario.email">
+                    <div ng-show="signupForm.uemail.$error.email">
+                        <span class="small text-danger">E-mail inv&aacute;lido.</span>
+                    </div>
+                    <div ng-show="signupCtrl.signupInvalido">
+                        <div ng-repeat="erro in signupCtrl.erro.email">
+                            <p class="small text-danger" ><span ng-bind="erro"></span></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword">Senha<span class="text-danger">*</span></label>
+                    <input type="password" id="inputPassword" name="upassword" class="form-control validate" placeholder="********" ng-minlength="8" maxlength="128" required ng-model="signupCtrl.usuario.senha">
+                    <div ng-show="signupForm.upassword.$error.minlength">
+                        <span class="small text-danger">Senha deve ter no m&iacute;nimo 8 caracteres.</span>
+                    </div>
+                    <div ng-show="signupCtrl.signupInvalido">
+                        <div ng-repeat="erro in signupCtrl.erro.senha">
+                            <p class="small text-danger" ><span ng-bind="erro"></span></p>
+                        </div>
+                    </div>
+                </div>
+                <input class="btn btn-lg btn-primary btn-block" type="submit" ng-disabled="signupForm.$invalid" value="Criar">
+                <span ng-show="signupForm.uemail.$error.required || signupForm.upassword.$error.required || signupForm.unome.$error.required">
+                    <p class="small"><span class="small text-danger">*</span> obrigat&oacute;rios</p>
+                </span>
+            </form>
+        </div>
+    </div>
+</div>

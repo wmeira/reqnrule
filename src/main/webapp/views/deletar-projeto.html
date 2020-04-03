@@ -1,0 +1,11 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="cancel()" aria-hidden="true">&times;</button>
+    <h3 class="modal-title">Deletar Projeto: <strong><span ng-bind="deletarProjetoCtrl.projeto.nome"></span></strong></h3>
+</div>
+<div class="modal-body">
+    <p class="text-danger"><strong>Aten&ccedil;&atilde;o!</strong> A opera&ccedil;&atilde;o deletar projeto n&atilde;o pode ser desfeita. Todos os requisitos e membros tamb&eacute;m ser&atilde;o apagados.</p>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-danger" ng-click="confirmar()">Deletar Projeto</button>
+    <button class="btn btn-default" ng-click="cancel()">Cancelar</button>
+</div>

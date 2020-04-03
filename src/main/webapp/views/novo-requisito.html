@@ -1,0 +1,140 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="cancel()" aria-hidden="true">&times;</button>
+    <h3 class="modal-title">Adicionar Requisito em <strong><span ng-bind="novoRequisitoCtrl.projeto.nome"></span></strong></h3>
+</div>
+<div class="modal-body">
+    <div ng-show="novoRequisitoCtrl.novoRequisitoInvalido" class="alert alert-danger alert-dismissable">
+        <button type="button" class="close" ng-click="novoRequisitoCtrl.novoRequisitoInvalido = false">&times;</button>
+        <strong><span class="glyphicon glyphicon-remove-sign"></span>&nbsp;Erro ao adicionar requisito.</strong>
+    </div>
+
+    <form name="novoRequisitoForm" role="form">
+
+        <div class="form-group">
+            <label for="inputTipo">Tipo do Requisito<span class="text-danger">*</span></label>
+            <div id="inputTipo" class="radio">
+                <label class="radio-inline">
+                    <input type="radio" ng-model="novoRequisitoCtrl.requisito.tipo" value="REQUISITO_FUNCIONAL">Requisito Funcional
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" ng-model="novoRequisitoCtrl.requisito.tipo" value="REQUISITO_NAO_FUNCIONAL">Requisito N&atilde;o-Funcional
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" ng-model="novoRequisitoCtrl.requisito.tipo" value="REQUISITO_DE_PROJETO">Requisito de Projeto
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputNome">Nome<span class="text-danger">*</span></label>
+            <input type="text" id="inputNome" name="unome" class="form-control validate" placeholder="Nome do requisito" maxlength="128" autofocus required ng-model="novoRequisitoCtrl.requisito.nome" />
+            <span ng-show="!novoRequisitoForm.$pristine && novoRequisitoForm.unome.$error.required" >
+                <p class="small text-danger">* Nome &eacute; obrigat&oacute;rio</p>
+            </span>
+            <div ng-show="novoRequisitoCtrl.novoRequisitoInvalido">
+                <div ng-repeat="erro in novoRequisitoCtrl.erro.nome">
+                    <p class="small text-danger" ><span ng-bind="erro"></span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="inputDescricao">Especifica&ccedil;&atilde;o</label>
+            <textarea rows="4" type="text" id="inputDescricao" name="udescricao" class="form-control" maxlength="2046" ng-model="novoRequisitoCtrl.requisito.descricao">
+            </textarea>
+            <div ng-show="novoRequisitoCtrl.novoRequisitoInvalido">
+                <div ng-repeat="erro in novoRequisitoCtrl.erro.descricao">
+                    <p class="small text-danger" ><span ng-bind="erro"></span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="inputPrioridade">Prioridade<span class="text-danger">*</span></label>
+                    <div id="inputPrioridade" class="radio">
+                        <label class="radio-inline">
+                            <input type="radio" ng-model="novoRequisitoCtrl.requisito.prioridade" value="ESSENCIAL">Essencial
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" ng-model="novoRequisitoCtrl.requisito.prioridade" value="DESEJADO">Desejado
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" ng-model="novoRequisitoCtrl.requisito.prioridade" value="OPCIONAL">Opcional
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="selectEstado">Estado<span class="text-danger">*</span></label>
+                    <select class="form-control" id="selectEstado" ng-options="estado.valor as estado.nome for estado in novoRequisitoCtrl.estados" ng-model="novoRequisitoCtrl.requisito.estado">
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="selectCategoria">Categoria</label>
+            <div class="row" id="selectCategoria">
+                <div class="col-sm-6">
+                    <select class="form-control" ng-options="categoria for categoria in novoRequisitoCtrl.categorias" ng-model="novoRequisitoCtrl.categoriaSelect" ng-disabled="novoRequisitoCtrl.categoriaInput">
+                    </select>
+                </div>
+                <div class="col-sm-6">
+                    <div class="input-group">
+                        <div class="input-group-addon"><span class="glyphicon glyphicon-plus"></span></div>
+                        <input type="text" id="inputCategoria" name="ucategoria" class="form-control" placeholder="Nova categoria" maxlength="64" ng-model="novoRequisitoCtrl.categoriaInput" />
+                    </div>
+                </div>
+            </div>
+            <div ng-show="novoRequisitoCtrl.novoRequisitoInvalido">
+                <div ng-repeat="erro in novoRequisitoCtrl.erro.categoria">
+                    <p class="small text-danger" ><span ng-bind="erro"></span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="tabAssociados">Requisitos Associados</label>
+            <div class="form-group has-feedback">
+                <input type="text" placeholder="Filtrar requisitos" class="form-control" id="inputSearchRequisito" ng-model="novoRequisitoCtrl.searchRequisitos">
+                <span class="glyphicon glyphicon-search form-control-feedback"></span>
+            </div>
+            <div ng-show="novoRequisitoCtrl.novoRequisitoInvalido">
+                <div ng-repeat="erro in novoRequisitoCtrl.erro.associados">
+                    <p class="small text-danger" ><span ng-bind="erro"></span></p>
+                </div>
+            </div>
+            <fieldset ng-init="novoRequisitoCtrl.iniciarTabelaRelacionamento()" id="tabAssociados" ng-style="{'overflow-y':'auto', 'height': novoRequisitoCtrl.tamanhoTabela}">
+                <table class="table table-condensed">
+                    <thead>
+                        <th class="col-xs-1">C&oacute;digo</th>
+                        <th>Requisito</th>
+                        <th>Categoria</th>
+                        <th class="col-xs-1">Pai</th>
+                        <th class="col-xs-1">Associado</th>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="r in novoRequisitoCtrl.associacoes | filter:{requisito:{nome:novoRequisitoCtrl.searchRequisitos}} | orderBy:'+requisito.codigo'">
+                            <td><span ng-bind="r.requisito.codigo"></span></td>
+                            <td><span ng-bind="r.requisito.nome"></span></td>
+                            <td><span ng-bind="r.requisito.categoria"></span></td>
+                            <td align="center"><input  type="radio" name="requisitoPai"  ng-model="novoRequisitoCtrl.paiSelecionado" ng-value="r.requisito" ng-click="uncheck($event)"></td>
+                            <td align="center"><input type="checkbox" name="requisitoAssociado" ng-model="r.checked"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </fieldset>
+
+        </div>
+
+
+    </form>
+
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" ng-click="novoRequisitoCtrl.adicionarRequisito()" ng-disabled="novoRequisitoForm.$invalid || novoRequisitoForm.$pristine">Adicionar Requisito</button>
+    <button class="btn btn-default" ng-click="cancel()">Cancelar</button>
+</div>

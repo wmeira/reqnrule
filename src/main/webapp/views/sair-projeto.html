@@ -1,0 +1,11 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="cancel()" aria-hidden="true">&times;</button>
+    <h3 class="modal-title">Sair do Projeto: <strong><span ng-bind="sairProjetoCtrl.projeto.nome"></span></strong></h3>
+</div>
+<div class="modal-body">
+    <p class="text-danger"><strong>Aten&ccedil;&atilde;o!</strong> Ao sair do projeto, o usu&aacute;rio n&atilde;o ter&aacute; mais acesso a nenhuma informa&ccedil;&atilde;o do mesmo.</p>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-danger" ng-click="confirmar()">Sair do Projeto</button>
+    <button class="btn btn-default" ng-click="cancel()">Cancelar</button>
+</div>

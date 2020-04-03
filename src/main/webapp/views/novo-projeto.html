@@ -1,0 +1,43 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <h1>Novo Projeto</h1><hr>
+            <form role="form" name="novoProjetoForm" ng-submit="projetoCtrl.novoProjeto()">
+                <div ng-show="projetoCtrl.novoProjetoInvalido" class="alert alert-danger alert-dismissable">
+                    <button type="button" class="close" ng-click="projetoCtrl.novoProjetoInvalido = null">&times;</button>
+                    <strong>Erro ao criar novo projeto.</strong>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputNome">Nome do Projeto<span class="text-danger">*</span></label>
+                    <input type="text" id="inputNome" name="unome" class="form-control validate" placeholder="Nome"
+                           maxlength="128" autofocus required ng-model="projetoCtrl.projeto.nome">
+                    <div ng-show="projetoCtrl.novoProjetoInvalido">
+                        <div ng-repeat="erro in projetoCtrl.erro.nome">
+                            <p class="small text-danger"><span ng-bind="erro"></span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputDescricao">Descri&ccedil;&atilde;o</label>
+                    <textarea rows="15" type="text" id="inputDescricao" name="udescricao" class="form-control validate"
+                              maxlength="2046" ng-model="projetoCtrl.projeto.descricao">
+                    </textarea>
+
+                    <div ng-show="projetoCtrl.novoProjetoInvalido">
+                        <div ng-repeat="erro in projetoCtrl.erro.descricao">
+                            <p class="small text-danger"><span ng-bind="erro"></span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <input class="btn btn-lg btn-primary btn-block" type="submit" ng-disabled="novoProjetoForm.$invalid" value="Cadastrar Projeto"/>
+                <span ng-show="novoProjetoForm.unome.$error.required" >
+                    <p class="small"><span class="small text-danger">*</span> obrigat&oacute;rios</p>
+                </span>
+
+            </form>
+        </div>
+    </div>
+</div>

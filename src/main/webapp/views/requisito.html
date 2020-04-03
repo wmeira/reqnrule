@@ -1,0 +1,210 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="cancel()" aria-hidden="true">&times;</button>
+    <h3 class="modal-title">Requisito #<span ng-bind="requisitoCtrl.requisito.codigo"></span>: <strong><span ng-bind="requisitoCtrl.nomeAntigo"></span></strong></h3>
+        <small>Vers&atilde;o <span ng-bind="requisitoCtrl.requisito.versao"></span>.0</small>
+</div>
+<div class="modal-body">
+    <div ng-style="{'overflow-y':'auto', 'height':'650px', 'overflow-x':'hidden', 'padding-right':'0'}">
+        <div ng-show="requisitoCtrl.requisitoInvalido" class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" ng-click="requisitoCtrl.requisitoInvalido = false">&times;</button>
+            <strong><span class="glyphicon glyphicon-remove-sign"></span>&nbsp;Erro ao alterar requisito.</strong>
+        </div>
+        <form name="requisitoForm" role="form">
+            <fieldset ng-disabled="!requisitoCtrl.podeAlterarRequisito()">
+                <div class="form-group">
+                    <label for="inputTipo">Tipo do Requisito<span class="text-danger">*</span></label>
+                    <div id="inputTipo" class="radio">
+                        <label class="radio-inline">
+                            <input type="radio" ng-model="requisitoCtrl.requisito.tipo" value="REQUISITO_FUNCIONAL">Requisito Funcional
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" ng-model="requisitoCtrl.requisito.tipo" value="REQUISITOS_NAO_FUNCIONAL">Requisito N&atilde;o-Funcional
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" ng-model="requisitoCtrl.requisito.tipo" value="REQUISITO_DE_PROJETO">Requisito de Projeto
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputNome">Nome<span class="text-danger">*</span></label>
+                    <input type="text" id="inputNome" name="unome" placeholder="Nome do requisito" autofocus class="form-control validate" maxlength="128" required ng-model="requisitoCtrl.requisito.nome" />
+                    <span ng-show="!requisitoForm.$pristine && requisitoForm.unome.$error.required" >
+                        <p class="small text-danger">* Nome &eacute; obrigat&oacute;rio</p>
+                    </span>
+                    <div ng-show="requisitoCtrl.requisitoInvalido">
+                        <div ng-repeat="erro in requisitoCtrl.erro.nome">
+                            <p class="small text-danger" ><span ng-bind="erro"></span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputDescricao">Especifica&ccedil;&atilde;o</label>
+            <textarea rows="4" type="text" id="inputDescricao" name="udescricao" class="form-control" maxlength="2046" ng-model="requisitoCtrl.requisito.descricao">
+            </textarea>
+                    <div ng-show="requisitoCtrl.requisitoInvalido">
+                        <div ng-repeat="erro in requisitoCtrl.erro.descricao">
+                            <p class="small text-danger" ><span ng-bind="erro"></span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="inputPrioridade">Prioridade<span class="text-danger">*</span></label>
+                            <div id="inputPrioridade" class="radio">
+                                <label class="radio-inline">
+                                    <input type="radio" ng-model="requisitoCtrl.requisito.prioridade" value="ESSENCIAL">Essencial
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" ng-model="requisitoCtrl.requisito.prioridade" value="DESEJADO">Desejado
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" ng-model="requisitoCtrl.requisito.prioridade" value="OPCIONAL">Opcional
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label for="selectEstado">Estado<span class="text-danger">*</span></label>
+                            <select class="form-control" id="selectEstado" ng-options="estado.valor as estado.nome for estado in requisitoCtrl.estados" ng-model="requisitoCtrl.requisito.estado">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="selectCategoria">Categoria</label>
+                    <div class="row" id="selectCategoria">
+                        <div class="col-sm-6">
+                            <select class="form-control" ng-options="categoria for categoria in requisitoCtrl.categorias" ng-model="requisitoCtrl.categoriaSelect" ng-disabled="requisitoCtrl.categoriaInput">
+                            </select>
+                        </div>
+                        <div class="col-sm-6" ng-show="requisitoCtrl.podeAlterarRequisito()">
+                            <div class="input-group">
+                                <div class="input-group-addon"><span class="glyphicon glyphicon-plus"></span></div>
+                                <input type="text" id="inputCategoria" name="ucategoria" class="form-control" placeholder="Nova categoria" maxlength="64" ng-model="requisitoCtrl.categoriaInput" />
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-show="requisitoCtrl.requisitoInvalido">
+                        <div ng-repeat="erro in requisitoCtrl.erro.categoria">
+                            <p class="small text-danger" ><span ng-bind="erro"></span></p>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+
+            <label for="tabAssociados">Requisitos Associados</label>
+            <div class="form-group has-feedback">
+                <input type="text" placeholder="Filtrar requisitos" class="form-control" id="inputSearchRequisito" ng-model="requisitoCtrl.searchRequisitos" ng-disabled="false">
+                <span class="glyphicon glyphicon-search form-control-feedback"></span>
+            </div>
+            <div ng-show="requisitoCtrl.requisitoInvalido">
+                <div ng-repeat="erro in requisitoCtrl.erro.associados">
+                    <p class="small text-danger" ><span ng-bind="erro"></span></p>
+                </div>
+            </div>
+            <fieldset ng-init="requisitoCtrl.iniciarTabelaRelacionamentos()" id="tabAssociados" ng-style="{'overflow-y':'auto', 'height': requisitoCtrl.tamanhoTabelaRelacionamento}" ng-disabled="!requisitoCtrl.podeAlterarRequisito()">
+                <table class="table table-condensed">
+                    <thead>
+                    <th class="col-xs-1">C&oacute;digo</th>
+                    <th>Requisito</th>
+                    <th>Categoria</th>
+                    <th class="col-xs-1">Pai</th>
+                    <th class="col-xs-1">Associado</th>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="r in requisitoCtrl.associacoes | filter:{requisito:{nome:requisitoCtrl.searchRequisitos}} | orderBy:'+requisito.codigo'">
+                        <td><span ng-bind="r.requisito.codigo"></span></td>
+                        <td><span ng-bind="r.requisito.nome"></span></td>
+                        <td><span ng-bind="r.requisito.categoria"></span></td>
+                        <td align="center"><input  type="radio" name="requisitoPai" ng-model="requisitoCtrl.paiSelecionado" ng-value="r.requisito" ng-click="uncheck($event)"></td>
+                        <td align="center"><input type="checkbox" name="requisitoAssociado" ng-model="r.checked"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </fieldset>
+
+            <div class="form-group" >
+                <label ng-style="{'margin-top':'10px'}" for="tabSolicitacao">Solicita&ccedil;&otilde;es de Mudan&ccedil;a Abertas</label>
+                <div ng-init="requisitoCtrl.iniciarTabelaSolicitacao()" id="tabSolicitacao" ng-style="{'overflow-y':'auto', 'height': requisitoCtrl.tamanhoTabelaSolicitacao}">
+                    <table class="table table-condensed">
+                        <thead>
+                        <th class="col-xs-1">C&oacute;digo</th>
+                        <th class="col-xs-2">Data Solicita&ccedil;&atilde;o</th>
+                        <th class="col-xs-4">Solicitado por</th>
+                        <th></th>
+                        <th></th>
+                        <!--<th class="col-xs-2">Visualizar</th>-->
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="s in requisitoCtrl.solicitacoesAbertas | orderBy:'+codigo'">
+                            <td  class="vert-align"><span ng-bind="s.codigo"></span></td>
+                            <td  class="vert-align"><span ng-bind="requisitoCtrl.getDataFormatada(s.dataSolicitacao)"></span></td>
+                            <td  class="vert-align"><span ng-bind="s.autor.usuario.nome"></span></td>
+                            <td class="vert-align"><a class="btn btn-link" ng-click="open('atender-solicitacao', s)"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;Visualizar</a></td>
+                            <td class="vert-align">
+                                <span ng-show="s.estado == 'ATENDIDO'">
+                                    <a class="btn-sm btn-primary nounderline">
+                                        ATENDENDO&nbsp;&nbsp;<span style="cursor: pointer" tooltip="Cancelar atendimento" ng-click="requisitoCtrl.cancelarAtendimento(s)" class="glyphicon glyphicon-remove"></span>
+                                    </a>
+                                </span>
+                                <span ng-show="s.estado == 'REJEITADO'">
+                                    <a class="btn-sm btn-danger nounderline">
+                                        REJEITANDO&nbsp;&nbsp;<span style="cursor: pointer" tooltip="Cancelar atendimento" ng-click="requisitoCtrl.cancelarAtendimento(s)" class="glyphicon glyphicon-remove"></span>
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <fieldset ng-disabled="!requisitoCtrl.podeAlterarRequisito()">
+                <div class="form-group" ng-style="{'margin-top':'10px'}">
+                    <label for="tabHistorico">Hist&oacute;rico</label>
+                    <div ng-init="requisitoCtrl.iniciarTabelaHistorico()" id="tabHistorico" ng-style="{'overflow-y':'auto', 'height': requisitoCtrl.tamanhoTabelaHistorico}">
+                        <table class="table table-condensed">
+                            <thead>
+                            <th class="col-xs-1">Vers&atilde;o</th>
+                            <th class="col-xs-2">Data Altera&ccedil;&atilde;o</th>
+                            <th class="col-xs-4">Alterado por</th>
+                            <th class="col-xs-5">Solicita&ccedil;&otilde;es (A)tendidas ou (R)ejeitadas</th>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="m in requisitoCtrl.requisito.mudancas | orderBy:'-versao'">
+                                <td class="vert-align"><span ng-bind="m.versao"></span>.0
+                                    <!--<span ng-show="m.versao == requisitoCtrl.requisito.versao">(atual)</span>-->
+                                </td>
+                                <td class="vert-align"><span ng-bind="requisitoCtrl.getDataFormatada(m.data)"></span></td>
+                                <td class="vert-align"><span ng-bind="m.autor.usuario.nome"></span></td>
+                                <td ng-show="m.solicitacoes.length == 0" class="vert-align">NENHUMA</td>
+                                 <td ng-show="m.solicitacoes.length > 0">
+                                    <span ng-repeat="s in m.solicitacoes">
+                                        <a class="btn-link" style="cursor: pointer" ng-click="open('visualizar-solicitacao', s)">
+                                            <span ng-bind="s.estado[0]"></span><span ng-bind="s.codigo"></span>
+                                        </a>
+                                    </span>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+            </fieldset>
+
+        </form>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button ng-show="requisitoCtrl.podeSolicitarMudanca()" class="btn btn-warning" ng-click="open('solicitar-mudanca')">Solicitar Mudan&ccedil;a</button>
+    <button ng-show="requisitoCtrl.podeAlterarRequisito()"  ng-disabled="requisitoForm.$pristine || requisitoForm.unome.$error.required" class="btn btn-primary" ng-click="requisitoCtrl.alterarRequisito()">Alterar Requisito</button>
+    <button class="btn btn-default" ng-click="cancel()">Fechar</button>
+</div>

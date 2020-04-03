@@ -1,0 +1,24 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="cancel()" aria-hidden="true">&times;</button>
+    <h3 class="modal-title">Solicita&ccedil;&atilde;o de Mudan&ccedil;a</h3>
+</div>
+<div class="modal-body">
+    <form name="solicitacaoForm" role="form">
+        <div class="form-group">
+            <p for="inputSolicitacao">Preencha as sugest&otilde;es de mudan&ccedil;a na &aacute;rea abaixo: </p>
+            <textarea autofocus rows="10" type="text" id="inputSolicitacao" required name="usolicitacao" class="form-control validate"
+                      maxlength="2046" ng-model="solicitarMudancaCtrl.solicitacao">
+            </textarea>
+            <div ng-show="solicitarMudancaCtrl.solicitacaoInvalida">
+                <div ng-repeat="erro in solicitarMudancaCtrl.erro.solicitacao">
+                    <p class="small text-danger"><span ng-bind="erro"></span></p>
+                </div>
+            </div>
+        </div>
+    </form>
+
+</div>
+<div class="modal-footer">
+    <button class="btn btn-danger" ng-click="solicitarMudancaCtrl.solicitarMudanca()" ng-disabled="solicitacaoForm.$pristine || solicitacaoForm.$invalid">Solicitar Mudan&ccedil;a</button>
+    <button class="btn btn-default" ng-click="cancel()">Cancelar</button>
+</div>

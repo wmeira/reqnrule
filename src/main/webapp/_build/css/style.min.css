@@ -1,0 +1,7 @@
+.ng-invalid.ng-dirty.validate{border-color:#cd5c5c}
+.ng-valid.ng-dirty.validate{border-color:green}
+body{padding-top:50px;padding-bottom:20px}
+.vcenter{display:flex;align-items:center}
+.table tbody>tr>td.vert-align{vertical-align:middle}
+.btnmargin-left{margin-left:5px}
+.nounderline{text-decoration:none!important}
