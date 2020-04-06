@@ -1,8 +1,10 @@
-# Req'N'Rule
+# Req'N'Rule - Requirements Management Tool
 
 Trabalho de Conclusão de Curso (TCC) - Especialização em Engenharia de Software - Universidade Federal do Paraná (UFPR) - 2013-2015.
 
 *Final Project - Specialization in Software Engineering - Universidade Federal do Paraná (UFPR) - 2013-2015.*
+
+
 
 ## Resumo 
 
