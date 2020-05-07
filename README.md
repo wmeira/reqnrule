@@ -23,9 +23,9 @@ The objective of this work was to develop a web requirements management tool bas
 
 ---
 
-### A monografia pode ser encontrada na pasta `docs`. Todos os documentos elaborados para o projeto podem ser encontrados nos apêndices do trabalho. Todas as telas finais do site podem ser encontradas na pasta `site_screens`.
+### A monografia pode ser encontrada na pasta `docs`. Todos os artefatos do projecto podem ser encontrados nos apêndices do trabalho. Todas as telas finais do site podem ser encontradas na pasta `site_screens`.
 
-### *The final project text may be in `docs` folder. All the developed documents for this project may be found in the appendices of the final project text. All the final site screens are found in `site_screens` folder.*
+### *The `docs` folder contains the final project text. All the project artifacts of this project may be found in the appendices of the final project text. The `site_screens` folder contains all the website screens.*
 
 
 
